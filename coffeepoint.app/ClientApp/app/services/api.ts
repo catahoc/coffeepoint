@@ -3,15 +3,21 @@ import { Http } from '@angular/http';
 import 'rxjs/Rx';
 import { Observable } from 'rxjs';
 
-const getResourceList = 'api/Resources';
-const getResource = 'api/Resources/';
-const incrementResource = 'api/Resources/IncrementResourceCount';
-const decrementResource = 'api/Resources/DecrementResourceCount';
+const getResourceList = 'api/admin/Resources';
+const setResource = 'api/admin/Resources';
+const setCash = 'api/admin/Cash';
+const getCashList = 'api/admin/Cash';
+const loadInitialValues = 'api/admin/LoadInitialValues';
 
 export interface ResourceEntryDto {
     name: string;
     amount: number;
-    limit: number;
+}
+
+export interface CashEntryDto {
+    name: string;
+    amount: number;
+    paper: boolean;
 }
 
 @Injectable() 
@@ -24,27 +30,34 @@ export class Api {
         return this.invokeGet<ResourceEntryDto[]>(getResourceList);
     }
 
-
-    getResource(name: string): Observable<ResourceEntryDto> {
-        return this.invokeGet<ResourceEntryDto>(getResource + name);
+    getCashList(): Observable<CashEntryDto[]> {
+        return this.invokeGet<CashEntryDto[]>(getCashList);
     }
 
-    incrementResource(name: string, delta: number): Observable<number> {
-        return this.invokePost<number>(incrementResource,
+
+    setResource(name: string, amount: number): Observable<number> {
+        return this.invokePost<number>(setResource,
             {
                 name: name,
-                delta: delta
+                amount: amount
             });
     }
-
-    decrementResource(name: string, delta: number): Observable<number> {
-        return this.invokePost<number>(decrementResource,
+    
+    setCash(name: string, amount: number): Observable<number> {
+        return this.invokePost<number>(setCash,
             {
                 name: name,
-                delta: delta
+                amount: amount
             });
     }
-
+    
+    loadInitialValues(): Observable<void> {
+        return this.invokePost<void>(loadInitialValues,
+            {
+                x: 1
+            });
+    }
+    
     private invokeGet<TReturn>(url: string): Observable<TReturn> {
         let targetUrl = this.baseUrl + url;
         console.log(`Invoke GET ${targetUrl}`);
@@ -53,7 +66,7 @@ export class Api {
 
     private invokePost<TReturn>(url: string, body: any): Observable<TReturn> {
         let targetUrl = this.baseUrl + url;
-        console.log(`Invoke POST ${targetUrl} by ${body}`);
+        console.log(`Invoke POST ${targetUrl} by ${JSON.stringify(body)}`);
         return this.http.post(targetUrl, body).map(x => x.json() as TReturn);
     }
 }

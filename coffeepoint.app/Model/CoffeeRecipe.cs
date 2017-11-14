@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace coffeepoint.app.Model
 {
@@ -15,10 +16,10 @@ namespace coffeepoint.app.Model
         public static readonly CoffeeRecipe DoubleAmericano = new CoffeeRecipe("Double Americano", 150, MakeResourceMap(20, 200, 0, MachineResource.BigCup));
 
         public string Name { get; }
-        public uint Cost { get; }
-        public Dictionary<MachineResource, uint> RequiredResources { get; }
+        public int Cost { get; }
+        public Dictionary<MachineResource, int> RequiredResources { get; }
 
-        private CoffeeRecipe(string name, uint cost, Dictionary<MachineResource, uint> requiredResources)
+        private CoffeeRecipe(string name, int cost, Dictionary<MachineResource, int> requiredResources)
         {
             Name = name;
             Cost = cost;
@@ -38,10 +39,15 @@ namespace coffeepoint.app.Model
             }
         }
 
-        private static Dictionary<MachineResource, uint> MakeResourceMap(uint coffee, uint water, uint milk,
+        public static CoffeeRecipe[] GetAll()
+        {
+            return Recipes.Values.ToArray();
+        }
+
+        private static Dictionary<MachineResource, int> MakeResourceMap(int coffee, int water, int milk,
             MachineResource cup)
         {
-            var result = new Dictionary<MachineResource, uint>
+            var result = new Dictionary<MachineResource, int>
             {
                 {cup, 1},
                 {MachineResource.CoffeeGramms, coffee},

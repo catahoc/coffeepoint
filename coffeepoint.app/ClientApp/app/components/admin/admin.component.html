@@ -1,13 +1,26 @@
 <div>
+    <button (click)="loadInitialResources()">Load Init resources & cash</button>
+    <button (click)="resetResources()">Reset resources & cash</button>
+    <h3>Resources for making coffee</h3>
     <div *ngFor="let resource of resources | async">
         <div class="card">
-            <span>{{resource.name}}</span>: <span>{{resource.amount}} pcs</span> (Max <span>{{resource.limit}}</span>)
+            <span>{{resource.name}}</span>: <span>{{resource.amount}} pcs</span>
         </div>
         <div>
-            <input name="delta" [(ngModel)]="resource.delta" placeholder="Enter amount to increment"/>
-            <button (click)="pushResource(resource)">Put</button>
-            <button (click)="popResource(resource)">Pop</button>
+            <button (click)="setResource(resource, resource.amount - 1)">Dec</button>
+            <button (click)="setResource(resource, resource.amount + 1)">Inc</button>
         </div>
-        <hr />
+        <hr/>
+    </div>
+    <h3>Cash</h3>
+    <div *ngFor="let cashEntry of cash | async">
+        <div class="card">
+            <span>{{cashEntry.name}}</span>: <span>{{cashEntry.amount}} pcs</span>
+        </div>
+        <div>
+            <button (click)="setCash(cashEntry, cashEntry.amount - 1)">Dec</button>
+            <button (click)="setCash(cashEntry, cashEntry.amount + 1)">Inc</button>
+        </div>
+        <hr/>
     </div>
 </div>

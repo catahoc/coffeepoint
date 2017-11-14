@@ -23,10 +23,10 @@ import { Api } from './services/api';
         HttpModule,
         FormsModule,
         RouterModule.forRoot([
-            { path: '', redirectTo: 'fetch-data', pathMatch: 'full' },
+            { path: '', redirectTo: 'coffee', pathMatch: 'full' },
             { path: 'admin', component: AdminComponent },
-            { path: 'fetch-data', component: FetchDataComponent },
-            { path: '**', redirectTo: 'fetch-data' }
+            { path: 'coffee', component: FetchDataComponent },
+            { path: '**', redirectTo: 'coffee' }
         ])
     ]
 })

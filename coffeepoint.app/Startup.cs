@@ -24,7 +24,8 @@ namespace coffeepoint.app
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddMvc();
-            services.AddSingleton<ResourcesManagementService>();
+            services.AddSingleton<ResourcesService>();
+            services.AddSingleton<CashService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
