@@ -8,7 +8,11 @@
         </div>
         <div>
             <button (click)="setResource(resource, resource.amount - 1)">Dec</button>
+            <button (click)="setResource(resource, resource.amount - 10)">Dec 10</button>
+            <button (click)="setResource(resource, resource.amount - 100)">Dec 100</button>
             <button (click)="setResource(resource, resource.amount + 1)">Inc</button>
+            <button (click)="setResource(resource, resource.amount + 10)">Inc 10</button>
+            <button (click)="setResource(resource, resource.amount + 100)">Inc 100</button>
         </div>
         <hr/>
     </div>

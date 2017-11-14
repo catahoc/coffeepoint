@@ -14,7 +14,7 @@ export class AdminComponent {
     }
 
     public async loadInitialResources() {
-        await this.api.loadInitialValues();
+        await this.api.loadInitialValues().toPromise();
         await this.load();
     }
 
