@@ -1,0 +1,24 @@
+﻿
+Задача:
+ 
+Разработать имитацию кофейного аппарата.
+ 
+Клиентская часть (asp.net mvc либо angular 4): терминал выбора типа и объема кофе, аппарат приёма денег и выдачи сдачи.
+ 
+Принимает монеты номиналом 1, 2, 5, 10; купюры 50, 100.
+ 
+Серверная часть (web api)): резервуары с компонентами для приготовления кофе, контейнеры для стаканчиков (нескольких объемов) и денег (для каждого номинала свой).
+
+
+Coffee:
+* Espresso 50R: 10G coffee + 30G water
+* Capuccino 100R: 10G coffee + 30G water + 70G milk
+* Americano 80R: 10G coffee + 100G water
+* 2 x Espresso 80R: 20G coffee + 100G water
+* 2 x Capuccino 180R: 20G coffee + 60G water + 140G milk
+* 2 x Americano 160R: 20G coffee + 200G water
+
+Cups:
+50G - small
+120G - mid
+250G - big

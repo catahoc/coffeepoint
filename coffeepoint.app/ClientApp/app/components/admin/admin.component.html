@@ -1,0 +1,12 @@
+<div>
+    <div *ngFor="let resource of resources | async">
+        <div class="card">
+            <span>{{resource.name}}</span>: <span>{{resource.amount}} pcs</span> (Max <span>{{resource.limit}}</span>)
+        </div>
+        <div>
+            <input [(ngModel)]="resource.delta" placeholder="Enter amount to increment"/>
+            <button (click)="pushResource(resource)"></button>
+        </div>
+        <hr />
+    </div>
+</div>
