@@ -8,6 +8,7 @@ import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
 import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
 import { AdminComponent } from './components/admin/admin.component';
+import { Api } from './services/api';
 
 @NgModule({
     declarations: [
@@ -16,6 +17,7 @@ import { AdminComponent } from './components/admin/admin.component';
         AdminComponent,
         FetchDataComponent
     ],
+    providers: [Api],
     imports: [
         CommonModule,
         HttpModule,

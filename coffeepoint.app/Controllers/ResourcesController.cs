@@ -17,35 +17,50 @@ namespace coffeepoint.app.Controllers
         }
 
         [HttpPost("[action]")]
-        public uint IncrementResourceCount(string name, uint count)
+        public uint IncrementResourceCount([FromBody] ResourceIncrementDto dto)
         {
-            var resource = MachineResource.Match(name);
-            var amountUnfit = resourcesManagementService.FullfillAndReturnRemaining(resource, count);
-            return amountUnfit;
+            var resource = MachineResource.Match(dto.Name);
+            ;
+            return resourcesManagementService.IncreaseAmount(resource, dto.Delta);
+        }
+
+        [HttpPost("[action]")]
+        public uint DecrementResourceCount([FromBody] ResourceIncrementDto dto)
+        {
+            var resource = MachineResource.Match(dto.Name);
+            ;
+            return resourcesManagementService.DecreaseAmount(resource, dto.Delta);
         }
 
         [HttpGet("{name}")]
-        public uint GetResourceCount(string name)
+        public ResourceEntryDto GetResourceCount(string name)
         {
             var resource = MachineResource.Match(name);
-            return resourcesManagementService.GetResourceAmount(resource);
+            return new ResourceEntryDto()
+            {
+                Name = name,
+                Limit = resource.Limit,
+                Amount = resourcesManagementService.GetResourceAmount(resource)
+            };
         }
 
         [HttpGet]
-        public ResourceEntry[] GetAllResources()
+        public ResourceEntryDto[] GetAllResources()
         {
-            return MachineResource.GetAll().Select(x => new ResourceEntry
-            {
-                Name = x.Name,
-                Amount = GetResourceCount(x.Name)
-            }).ToArray();
+            return MachineResource.GetAll().Select(x => GetResourceCount(x.Name)).ToArray();
         }
 
-        public class ResourceEntry
+        public class ResourceEntryDto
         {
             public string Name { get; set; }
             public uint Amount { get; set; }
             public uint Limit { get; set; }
+        }
+
+        public class ResourceIncrementDto
+        {
+            public string Name { get; set; }
+            public uint Delta { get; set; }
         }
     }
 }

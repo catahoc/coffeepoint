@@ -5,6 +5,8 @@ namespace coffeepoint.app.Model
 {
     public class CoffeeRecipe
     {
+        private static readonly Dictionary<string, CoffeeRecipe> Recipes = new Dictionary<string, CoffeeRecipe>();
+
         public static readonly CoffeeRecipe Espresso = new CoffeeRecipe("Espresso", 60, MakeResourceMap(10, 30, 0, MachineResource.SmallCup));
         public static readonly CoffeeRecipe Capuccino = new CoffeeRecipe("Capuccino", 100, MakeResourceMap(10, 30, 70, MachineResource.MidCup));
         public static readonly CoffeeRecipe Americano = new CoffeeRecipe("Americano", 80, MakeResourceMap(10, 100, 0, MachineResource.MidCup));
@@ -12,13 +14,11 @@ namespace coffeepoint.app.Model
         public static readonly CoffeeRecipe DoubleCapuccino = new CoffeeRecipe("Double Capuccino", 180, MakeResourceMap(20, 60, 140, MachineResource.BigCup));
         public static readonly CoffeeRecipe DoubleAmericano = new CoffeeRecipe("Double Americano", 150, MakeResourceMap(20, 200, 0, MachineResource.BigCup));
 
-        private static readonly Dictionary<string, CoffeeRecipe> Recipes = new Dictionary<string, CoffeeRecipe>();
-
         public string Name { get; }
         public uint Cost { get; }
         public Dictionary<MachineResource, uint> RequiredResources { get; }
 
-        public CoffeeRecipe(string name, uint cost, Dictionary<MachineResource, uint> requiredResources)
+        private CoffeeRecipe(string name, uint cost, Dictionary<MachineResource, uint> requiredResources)
         {
             Name = name;
             Cost = cost;

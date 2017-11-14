@@ -7,6 +7,8 @@ namespace coffeepoint.app.Model
 {
     public class MachineResource
     {
+        private static readonly Dictionary<string, MachineResource> Resources = new Dictionary<string, MachineResource>();
+
         public static readonly MachineResource SmallCup = new MachineResource("Small Cup", 200);
         public static readonly MachineResource MidCup = new MachineResource("Mid Cup", 100);
         public static readonly MachineResource BigCup = new MachineResource("Big Cup", 50);
@@ -14,9 +16,7 @@ namespace coffeepoint.app.Model
         public static readonly MachineResource WaterGramms = new MachineResource("Water Gramms", 10000);
         public static readonly MachineResource MilkGramms = new MachineResource("Milk Gramms", 4000);
 
-        private static readonly Dictionary<string, MachineResource> Resources = new Dictionary<string, MachineResource>();
-
-        public MachineResource(string name, uint limit)
+        private MachineResource(string name, uint limit)
         {
             Name = name;
             Limit = limit;

@@ -4,8 +4,9 @@
             <span>{{resource.name}}</span>: <span>{{resource.amount}} pcs</span> (Max <span>{{resource.limit}}</span>)
         </div>
         <div>
-            <input [(ngModel)]="resource.delta" placeholder="Enter amount to increment"/>
-            <button (click)="pushResource(resource)"></button>
+            <input name="delta" [(ngModel)]="resource.delta" placeholder="Enter amount to increment"/>
+            <button (click)="pushResource(resource)">Put</button>
+            <button (click)="popResource(resource)">Pop</button>
         </div>
         <hr />
     </div>
