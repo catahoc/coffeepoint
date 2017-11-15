@@ -1,7 +1,7 @@
 ﻿import { Component, Inject, Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/Rx';
-import { Observable } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 
 const getResourceList = 'api/admin/Resources';
 const setResource = 'api/admin/Resources';
@@ -50,6 +50,8 @@ export interface MoneyBackEntryDto {
 
 @Injectable() 
 export class Api {
+    performsRequest: boolean = false;
+
     constructor(private readonly http: Http,
         @Inject('BASE_URL') private readonly baseUrl: string) {
     }
@@ -108,16 +110,31 @@ export class Api {
     getAllMoney(): Observable<void> {
         return this.invokePost<void>(getAllMoney, {});
     }
+
+    private coverPerforming<T>(observable: Observable<T>): Observable<T> {
+        return new Observable(x => {
+            this.performsRequest = true;
+            const connectable = observable.publish();
+            const s1 = connectable.subscribe(() => this.performsRequest = false, () => this.performsRequest = false);
+            const s2 = connectable.subscribe(x);
+            const s3 = connectable.connect();
+            const s = new Subscription();
+            s.add(s1);
+            s.add(s2);
+            s.add(s3);
+            return s;
+        });
+    }
     
     private invokeGet<TReturn>(url: string): Observable<TReturn> {
         let targetUrl = this.baseUrl + url;
         console.log(`Invoke GET ${targetUrl}`);
-        return this.http.get(targetUrl).map(x => x.json() as TReturn);
+        return this.coverPerforming(this.http.get(targetUrl).map(x => x.json() as TReturn));
     }
 
     private invokePost<TReturn>(url: string, body: any): Observable<TReturn> {
         let targetUrl = this.baseUrl + url;
         console.log(`Invoke POST ${targetUrl} by ${JSON.stringify(body)}`);
-        return this.http.post(targetUrl, body).map(x => x.json() as TReturn);
+        return this.coverPerforming(this.http.post(targetUrl, body).map(x => x.json() as TReturn));
     }
 }

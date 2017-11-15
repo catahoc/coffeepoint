@@ -1,8 +1,8 @@
-<div>
+<div [class.disabled]="api.performsRequest">
     <button (click)="loadInitialResources()">Load Init resources & cash</button>
     <button (click)="getAllMoney()">Get all money</button>
     <h3>Resources for making coffee</h3>
-    <div *ngFor="let resource of resources | async">
+    <div *ngFor="let resource of resources">
         <div class="card">
             <span>{{resource.name}}</span>: <span>{{resource.amount}} pcs</span>
         </div>
@@ -17,7 +17,7 @@
         <hr/>
     </div>
     <h3>Cash</h3>
-    <div *ngFor="let cashEntry of cash | async">
+    <div *ngFor="let cashEntry of cash">
         <div class="card">
             <span>{{cashEntry.name}}</span>: <span>{{cashEntry.amount}} pcs</span>
         </div>
