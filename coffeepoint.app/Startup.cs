@@ -2,9 +2,11 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using coffeepoint.app.Controllers;
 using coffeepoint.app.Model;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.SpaServices.Webpack;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -26,6 +28,12 @@ namespace coffeepoint.app
             services.AddMvc();
             services.AddSingleton<ResourcesService>();
             services.AddSingleton<CashService>();
+            services.AddSingleton<SingleAccessService>();
+            services.AddSingleton<SingleAccessFilter>();
+            services.AddMvc(x =>
+            {
+                x.Filters.Add<SingleAccessFilter>();
+            });
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

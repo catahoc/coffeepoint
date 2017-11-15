@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace coffeepoint.app.Controllers
 {
+    [SingleAccess]
     [Produces("application/json")]
     [Route("api/[controller]")]
     public class CoffeeController : Controller
