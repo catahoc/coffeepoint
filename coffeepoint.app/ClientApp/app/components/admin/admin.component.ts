@@ -18,6 +18,11 @@ export class AdminComponent {
         await this.load();
     }
 
+    public async getAllMoney() {
+        await this.api.getAllMoney().toPromise();
+        await this.load();
+    }
+
     public async setResource(entry: ResourceEntryDto, newAmount: number) {
         try {
             await this.api.setResource(entry.name, newAmount).toPromise();

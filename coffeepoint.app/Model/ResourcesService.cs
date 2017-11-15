@@ -21,10 +21,10 @@ namespace coffeepoint.app.Model
         {
             lock (safe)
             {
-                var enough = recipe.RequiredResources.FirstOrDefault(x => resources[x.Key] < x.Value);
-                if (!Equals(enough, default(KeyValuePair<MachineResource, int>)))
+                var firstNonFitResource = recipe.RequiredResources.FirstOrDefault(x => resources[x.Key] < x.Value);
+                if (!Equals(firstNonFitResource, default(KeyValuePair<MachineResource, int>)))
                 {
-                    throw new Exception("Not enough " + enough.Key.Name);
+                    throw new Exception("Not enough " + firstNonFitResource.Key.Name);
                 }
 
                 foreach (var resource in recipe.RequiredResources)
@@ -38,7 +38,7 @@ namespace coffeepoint.app.Model
         {
             lock (safe)
             {
-                return resources[resource] = amount;
+                return resources[resource] = Math.Max(amount, 0);
             }
         }
 
@@ -60,6 +60,14 @@ namespace coffeepoint.app.Model
                 resources[MachineResource.CoffeeGramms] = 80;
                 resources[MachineResource.MilkGramms] = 700;
                 resources[MachineResource.WaterGramms] = 700;
+            }
+        }
+
+        public bool IsEnoughResources(CoffeeRecipe coffeeRecipe)
+        {
+            lock (safe)
+            {
+                return coffeeRecipe.RequiredResources.All(x => resources[x.Key] >= x.Value);
             }
         }
     }

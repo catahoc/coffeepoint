@@ -6,7 +6,7 @@ import { RouterModule } from '@angular/router';
 
 import { AppComponent } from './components/app/app.component';
 import { NavMenuComponent } from './components/navmenu/navmenu.component';
-import { FetchDataComponent } from './components/fetchdata/fetchdata.component';
+import { CoffeeComponent } from './components/coffee/coffee.component';
 import { AdminComponent } from './components/admin/admin.component';
 import { Api } from './services/api';
 
@@ -15,7 +15,7 @@ import { Api } from './services/api';
         AppComponent,
         NavMenuComponent,
         AdminComponent,
-        FetchDataComponent
+        CoffeeComponent
     ],
     providers: [Api],
     imports: [
@@ -25,7 +25,7 @@ import { Api } from './services/api';
         RouterModule.forRoot([
             { path: '', redirectTo: 'coffee', pathMatch: 'full' },
             { path: 'admin', component: AdminComponent },
-            { path: 'coffee', component: FetchDataComponent },
+            { path: 'coffee', component: CoffeeComponent },
             { path: '**', redirectTo: 'coffee' }
         ])
     ]

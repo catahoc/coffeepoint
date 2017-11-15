@@ -1,0 +1,31 @@
+<h1>Make your order</h1>
+<div *ngIf="!state && !gotBackMoney">Loading status...</div>
+<div *ngIf="gotBackMoney">
+    Here is your money:
+    <div *ngFor="let entry of gotBackMoney">
+        {{entry.count}} x {{entry.name}}
+    </div>
+    <button (click)="takeMoney()">Take Money</button>
+</div>
+<div *ngIf="state && !gotBackMoney" class='container-fluid'>
+    <div class='row'>
+        <div class='col-sm-6'>
+            <h3>Pick your coffee</h3>
+            <div *ngFor="let coffee of state.coffees">
+                <h4 [class.unavailable]="!coffee.isAvailable">{{coffee.name}} - {{coffee.cost}} RUB</h4>
+                <span *ngIf="!coffee.isAvailable">Cannot be ordered for now</span>
+                <span *ngIf="!coffee.isHaveExchange">No exchange, please enter exact amount</span>
+                <button *ngIf="coffee.isAvailable" (click)="order(coffee)" [disabled]="!coffee.isEnoughMoney || !coffee.isHaveExchange">Order</button>
+            </div>
+        </div>
+        <div class='col-sm-6'>
+            <h3>Current amount: {{state.currentAmount}}. We receive following money:</h3>
+            <div *ngFor="let cashItem of state.cashItems">
+                <h4>{{cashItem.name}}</h4>
+                <button (click)="put(cashItem)">Put</button>
+            </div>
+            <button (click)="getMyMoneyBack()">Get money back</button>
+        </div>
+    </div>
+</div>
+

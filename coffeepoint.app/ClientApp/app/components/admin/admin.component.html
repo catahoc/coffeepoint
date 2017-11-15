@@ -1,6 +1,6 @@
 <div>
     <button (click)="loadInitialResources()">Load Init resources & cash</button>
-    <button (click)="resetResources()">Reset resources & cash</button>
+    <button (click)="getAllMoney()">Get all money</button>
     <h3>Resources for making coffee</h3>
     <div *ngFor="let resource of resources | async">
         <div class="card">
@@ -23,7 +23,11 @@
         </div>
         <div>
             <button (click)="setCash(cashEntry, cashEntry.amount - 1)">Dec</button>
+            <button (click)="setCash(cashEntry, cashEntry.amount - 10)">Dec 10</button>
+            <button (click)="setCash(cashEntry, cashEntry.amount - 100)">Dec 100</button>
             <button (click)="setCash(cashEntry, cashEntry.amount + 1)">Inc</button>
+            <button (click)="setCash(cashEntry, cashEntry.amount + 10)">Inc 10</button>
+            <button (click)="setCash(cashEntry, cashEntry.amount + 100)">Inc 100</button>
         </div>
         <hr/>
     </div>

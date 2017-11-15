@@ -45,7 +45,7 @@ namespace coffeepoint.app.Controllers
         }
 
         [HttpPost("Cash")]
-        public int IncrementCashCount([FromBody] SetAmountDto dto)
+        public int SetCashCount([FromBody] SetAmountDto dto)
         {
             var cashItem = CashItem.Match(dto.Name);
             return cashService.SetAmount(cashItem, dto.Amount);
@@ -63,11 +63,18 @@ namespace coffeepoint.app.Controllers
         }
 
         [HttpPost("LoadInitialValues")]
-        public string LoadInitialValues()
+        public JsonResult LoadInitialValues()
         {
             cashService.LoadInitialValues();
             resourcesService.LoadInitialValues();
-            return "Success";
+            return Json("Success");
+        }
+
+        [HttpPost("GetAllMoney")]
+        public JsonResult GetAllMoney()
+        {
+            cashService.ResetValues();
+            return Json("Success");
         }
 
         public class ResourceEntryDto
